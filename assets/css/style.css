@@ -1,8 +1,25 @@
-body{
+body {
     font-family: 'Poppins', sans-serif;
     background-image: url('../img/landing-page.png');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+nav {
+    z-index: 100;
+}
+
+/* First Section */
+.cover-container {
+    height: 100vh;
+}
+
+.first-div>div>div>span {
+    font-size: calc(8px + 1vw);
+}
+
+.first-div>div>.text-capitalize>span {
+    font-size: calc(12px + 1vw);
 }
