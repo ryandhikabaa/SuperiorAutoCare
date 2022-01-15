@@ -23,3 +23,71 @@ nav {
 .first-div>div>.text-capitalize>span {
     font-size: calc(12px + 1vw);
 }
+
+/* Service Ditawarkan Section */
+.big-div {
+    height: 100vh;
+    padding: 0 20px;
+}
+
+.fit-div {
+    height: fit-content;
+}
+
+.items {
+    height: 40vh;
+}
+
+.items>svg {
+    width: 20vw;
+    height: 20vh;
+}
+
+.items>p {
+    font-size: calc(15px + 1vmax);
+}
+
+.items>span {
+    font-size: calc(8px + 1vmin);
+}
+
+/* Footer */
+footer {
+    position: relative;
+    bottom: 0;
+}
+
+footer>div>div>p {
+    font-size: 14px;
+}
+
+footer>div>div>span {
+    font-size: 10px;
+    color: gray;
+}
+#sosmed > .d-flex > svg {
+    margin: 0 20px 0 0;
+    width: 24px;
+    height: 24px;
+}
+
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+/* Atur Responsive */
+@media (max-width: 576px) {
+    .big-div {
+        height: fit-content;
+        padding: 20px 20px;
+    }
+
+    .big-div>div {
+        width: 40%;
+        height: 300px;
+        margin: 10px 0;
+    }
+}
