@@ -160,18 +160,21 @@
         <h4 class="my-3">Formulir Reservasi SuperiorAutoCare</h4>
         <form class="needs-validation w-100 mx-auto" novalidate="" id="form-reservasi">
             <div class="row g-3">
-
+                <div class="my-alert alert alert-success alert-dismissible fade show d-none" role="alert">
+                    <strong>Terimakasih!</strong> Reservasi kendaraan anda sudah kami terima.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <div class="col-12">
                     <label for="nama" class="form-label" style="float: left;">Nama</label>
                     <input type="nama" class="form-control" id="nama" placeholder="Masukan Nama Anda..."
                         name="nama-pelanggan">
                     <div class="invalid-feedback">
-                        Please enter your name.
+                        Please enter your name
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <label for="telp" class="form-label">Nomor Telepon</label>
+                    <label for="telp" class="form-label" style="float: left;">Nomor Telepon</label>
                     <input name="nomor-telepon" type="text" class="form-control" id="telp"
                         placeholder="Masukan Nomor Telepon Anda..." required="">
                     <div class="invalid-feedback">
@@ -180,7 +183,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <label for="noken" class="form-label">Nomor Kendaraan</label>
+                    <label for="noken" class="form-label" style="float: left;">Nomor Kendaraan</label>
                     <input name="nomor-kendaraan" type="text" class="form-control" id="noken"
                         placeholder="Plat Nomor Kendaraan..." value="" required="">
                     <div class="invalid-feedback">
@@ -189,7 +192,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <label for="tiken" class="form-label">Tipe Kendaraan</label>
+                    <label for="tiken" class="form-label" style="float: left;">Tipe Kendaraan</label>
                     <input name="tipe-kendaraan" type="text" class="form-control" id="tiken"
                         placeholder="Tipe Kendaraan (MPV/ Hatchback/Sedan)..." value="" required="">
                     <div class="invalid-feedback">
@@ -198,7 +201,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <label for="padi" class="form-label">Paket Dipilih</label>
+                    <label for="padi" class="form-label" style="float: left;">Paket Dipilih</label>
                     <select name="paket-dipilih" class="form-select">
                         <option selected value="car wash">Car Wash</option>
                         <option value="eksterior detail">Eksterior Detail</option>
@@ -213,7 +216,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <label for="wares" class="form-label">Waktu Reservasi</label>
+                    <label for="wares" class="form-label" style="float: left;">Waktu Reservasi</label>
                     <input name="waktu-reservasi" id="datetimepicker" type="text" class="form-control" readonly
                         placeholder="Waktu Reservasi..." value="" required="">
                     <div class="invalid-feedback">
@@ -223,6 +226,10 @@
             </div>
         </form>
         <button class="w-100 btn btn-primary btn-lg my-3" onclick="formSubmitter()">Reservasi</button>
+        <button class="w-100 btn btn-primary btn-ld my-3 d-none" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
     </div>
 
     <!-- Footer -->
@@ -311,19 +318,41 @@
         $('#datetimepicker').datetimepicker();
 
         // Submit to Database
+        const btnSubmit = document.querySelector('.btn-lg');
+        const btnLoading = document.querySelector('.btn-ld');
+        const alertSuccess = document.querySelector('.my-alert');
+
         function formSubmitter() {
+            // tampilkan tombol loading, hilangkan tombol kirim
+            dNoneClass();
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "admin/data-insertion.php");
             xhr.onload = function (event) {
                 console.log(event.target.response);
                 const responses = JSON.parse(event.target.response)
-                alert(responses.status + ", " + responses.message); // raw response
-                $('form').get(0).reset();
+                if (responses.status == 'OK') {
+                    // tampilkan tombol kirim, hilangkan tombol loading
+                    dNoneClass();
+                    alert(responses.status + ", " + responses.message); // raw response
+                    alertSuccess.classList.toggle('d-none');
+                    $('form').get(0).reset(); //Reset form jadi kosong
+                } else {
+                    // tampilkan tombol kirim, hilangkan tombol loading
+                    dNoneClass();
+                    alert(responses.status + ", " + responses.message); // raw response
+                }
             };
             // or onerror, onabort
             let formData = new FormData(document.getElementById("form-reservasi"));
             xhr.send(formData);
-           
+
+        }
+
+        function dNoneClass() {
+            //misal d-none ada maka remove kalau ndak ada ditambah
+            // tampilkan tombol loading, hilangkan tombol kirim
+            btnSubmit.classList.toggle('d-none');
+            btnLoading.classList.toggle('d-none');
         }
     </script>
 
