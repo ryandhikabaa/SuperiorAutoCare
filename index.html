@@ -157,7 +157,7 @@
 
     <!-- Section Fourth (Booking / Reservasi) -->
     <div class="fit-div text-black p-5" style="background-color: #E3E3E3;">
-        <h4 class="my-3">Formulir Pendaftaran</h4>
+        <h4 class="my-3">Formulir Reservasi SuperiorAutoCare</h4>
         <form class="needs-validation w-100 mx-auto" novalidate="" id="form-reservasi">
             <div class="row g-3">
 
@@ -309,6 +309,22 @@
         // Date Time Picker
         $.datetimepicker.setLocale('en');
         $('#datetimepicker').datetimepicker();
+
+        // Submit to Database
+        function formSubmitter() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "admin/data-insertion.php");
+            xhr.onload = function (event) {
+                console.log(event.target.response);
+                const responses = JSON.parse(event.target.response)
+                alert(responses.status + ", " + responses.message); // raw response
+                $('form').get(0).reset();
+            };
+            // or onerror, onabort
+            let formData = new FormData(document.getElementById("form-reservasi"));
+            xhr.send(formData);
+           
+        }
     </script>
 
 </body>
